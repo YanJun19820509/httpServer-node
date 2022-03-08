@@ -1,0 +1,1 @@
+D:\TortoiseSVN\bin\TortoiseProc.exe /command:update /path:"%1" /closeonend:3

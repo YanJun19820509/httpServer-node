@@ -1,3 +1,4 @@
+import { execFileSync } from "child_process";
 import { readFileSync } from "fs";
 import { parse } from "jsonc-parser";
 import P from 'path';
@@ -13,5 +14,14 @@ export namespace utils {
     /** 获取相对于项目根目录的绝对路径 */
     export function resolvePath(path: string): string {
         return P.join(process.cwd(), path);
+    }
+
+    /**
+     * 执行可执行文件
+     * @param file 
+     * @returns 
+     */
+    export function execFile(file: string, args: string[]): string {
+        return execFileSync(file, args, { encoding: 'utf8' });
     }
 }

@@ -3,7 +3,7 @@ import P from 'path'
 import xlsx from 'node-xlsx'
 
 export namespace e2j {
-    let defaultDest: string, fileDest: any;
+    let defaultDest: string[], fileDest: any;
     let outPutInfo: string[];
 
     export function exportJson(config: any): string[] {
@@ -16,7 +16,7 @@ export namespace e2j {
     function setJsonDest(configFile: string) {
         let destBuffer = readFileSync(configFile, 'utf8');
         let destConfig = JSON.parse(destBuffer);
-        destConfig.forEach((c: { dest: string, files?: string[] }) => {
+        destConfig.forEach((c: { dest: string[], files?: string[] }) => {
             if (!c.files) defaultDest = c.dest;
             else {
                 fileDest = fileDest || {};
@@ -93,8 +93,11 @@ export namespace e2j {
             json[sheet.name] = o;
         });
 
-        var dest = (fileDest?.[name] || defaultDest) + '/' + name + '.json';
-        writeFileSync(dest, JSON.stringify(json), 'utf8');
-        outPutInfo.push(`导出json：${dest}`);
+        let dests: string[] = fileDest?.[name] || defaultDest;
+        dests.forEach(dir => {
+            var dest = dir + '/' + name + '.json';
+            writeFileSync(dest, JSON.stringify(json), 'utf8');
+            outPutInfo.push(`导出json：${dest}`);
+        });
     }
 }

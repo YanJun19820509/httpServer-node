@@ -6,7 +6,6 @@ import { IBusiness, register } from "../../src/BusinessInterface";
 @register('/gm/:type')
 class GameProjectManage implements IBusiness {
     async handle(param: any, ctx: ParameterizedContext<any, IRouterParamContext<any, {}>, any>): Promise<void> {
-        console.log(ctx.params.type, param)
         switch (ctx.params.type) {
             case 'show_add':
                 return ctx.render('gm-add');

@@ -149,7 +149,6 @@ export class SqliteTable implements ITable {
                     console.error('select error', err);
                     resolve([]);
                 } else {
-                    console.error('select', rows);
                     resolve(rows);
                 }
             });
