@@ -1,0 +1,46 @@
+<div style="width: fit-content;margin: auto;">
+    <h4>项目管理</h4>
+    <form action="/gm/update" method="post" enctype="application/x-www-form-urlencoded">
+        <div
+            style="display: grid;grid-template-columns: 200px auto;grid-template-rows: repeat(6,40px); text-align: left;">
+            <div>项目id：</div>
+            <div>
+                <input type="text" name="id" value="<%= info.id %>" readonly />
+            </div>
+            <div>项目名称：</div>
+            <div><input type="text" name="name" value="<%= info.name %>" /></div>
+            <div>项目根目录：</div>
+            <div>
+                <input type="text" id="root" name="root" style="width: 400px;" value="<%= info.root %>" />
+                <!-- <input type="button" value="选择" onclick="selDir('root');" /> -->
+            </div>
+            <div>项目excel文件存放目录：</div>
+            <div>
+                <input type="text" id="excelsDir" name="excelsDir" style="width: 400px;"
+                    value="<%= info.excelsDir %>" />
+                <!-- <input type="button" value="选择" onclick="selDir('excelsDir');" /> -->
+            </div>
+            <div>json文件导出配置：</div>
+            <div>
+                <input type="text" id="jsonOutputConfig" name="jsonOutputConfig" style="width: 400px;"
+                    value="<%= info.jsonOutputConfig %>" />
+                <!-- <input type="button" value="选择" onclick="selDir('jsonOutputConfig');" /> -->
+            </div>
+            <div></div>
+            <div>
+                <input type="submit" value="修改" />
+            </div>
+        </div>
+    </form>
+    <div style="display: grid; text-align: center;">
+        <div style="width: fit-content;height: fit-content;">
+            <form action="/export_json" method="post" enctype="application/x-www-form-urlencoded">
+                <input type="text" name="id" value="<%= info.id %>" style="display: none;" />
+                <input type="submit" value="导出json" style="width: 100px;height: 100px;" />
+            </form>
+        </div>
+    </div>
+</div>
+<div style="text-align: center;width: fit-content;margin: auto;">
+    <a href="/">返回</a>
+</div>

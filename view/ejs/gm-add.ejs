@@ -1,0 +1,56 @@
+<div style="width: fit-content;margin: auto;">
+    <h4>新增项目配置</h4>
+    <form action="/gm/add" method="post" enctype="application/x-www-form-urlencoded">
+        <div
+            style="display: grid;grid-template-columns: 200px auto;grid-template-rows: repeat(6,40px); text-align: left;">
+            <div>项目id：</div>
+            <div>
+                <input type="text" name="id" />
+            </div>
+            <div>项目名称：</div>
+            <div><input type="text" name="name" /></div>
+            <div>项目根目录：</div>
+            <div>
+                <input type="text" id="root" name="root" style="width: 400px;" />
+                <!-- <input type="button" value="选择" onclick="selDir('root');" /> -->
+            </div>
+            <div>项目excel文件存放目录：</div>
+            <div>
+                <input type="text" id="excelsDir" name="excelsDir" style="width: 400px;" />
+                <!-- <input type="button" value="选择" onclick="selDir('excelsDir');" /> -->
+            </div>
+            <div>json文件导出配置：</div>
+            <div>
+                <input type="text" id="jsonOutputConfig" name="jsonOutputConfig" style="width: 400px;" />
+                <!-- <input type="button" value="选择" onclick="selDir('jsonOutputConfig');" /> -->
+            </div>
+            <div></div>
+            <div>
+                <input type="submit" value="添加" />
+            </div>
+        </div>
+    </form>
+    <script>
+        function selDir(type) {
+            // try {
+            //     var Message = "选择目录"; //选择框提示信息
+            //     var Shell = new ActiveXObject("Shell.Application");
+            //     var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
+            //     //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
+            //     if (Folder != null) {
+            //         Folder = Folder.items(); // 返回 FolderItems 对象
+            //         Folder = Folder.item(); // 返回 Folderitem 对象
+            //         Folder = Folder.Path; // 返回路径
+            //         if (Folder.charAt(Folder.length - 1) != "\\") {
+            //             Folder = Folder + "\\";
+            //         }
+            //         document.getElementById(type).value = Folder;
+            //         return Folder;
+            //     }
+            // }
+            // catch (e) {
+            //     alert(e.message);
+            // }
+        }
+    </script>
+</div>
