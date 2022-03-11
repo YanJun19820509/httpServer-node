@@ -1,5 +1,5 @@
 import { execFileSync } from "child_process";
-import { readFileSync } from "fs";
+import { copyFileSync, mkdirSync, readFileSync } from "fs";
 import { parse } from "jsonc-parser";
 import P from 'path';
 
@@ -23,5 +23,19 @@ export namespace utils {
      */
     export function execFile(file: string, args: string[]): string {
         return execFileSync(file, args, { encoding: 'utf8' });
+    }
+
+    /**
+     * 创建目录
+     * @param path 
+     */
+    export function makeDir(path: string) {
+        mkdirSync(path, {
+            recursive: true
+        });
+    }
+
+    export function copy(from: string, to: string) {
+        copyFileSync(from, to);
     }
 }

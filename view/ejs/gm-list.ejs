@@ -1,8 +1,11 @@
 <div style="width: fit-content;margin: auto;">
     <h3>项目列表</h3>
-    <div style="display: grid;grid-template-columns: 100px repeat(5,auto); text-align: left;">
+    <div style="display: grid;grid-template-columns: 100px repeat(6,auto); text-align: left;">
         <div style="border: 1px solid #999;padding: 4px;">
             <h4>项目名称</h4>
+        </div>
+        <div style="border: 1px solid #999;padding: 4px;">
+            <h4>项目代号</h4>
         </div>
         <div style="border: 1px solid #999;padding: 4px;">
             <h4>项目根目录</h4>
@@ -20,13 +23,16 @@
                 <%= items[i].name %>
             </div>
             <div style="border: 1px solid #999;padding: 4px;">
+                <%= items[i].code %>
+            </div>
+            <div style="border: 1px solid #999;padding: 4px;">
                 <%= items[i].root %>
             </div>
             <div style="border: 1px solid #999;padding: 4px;">
                 <%= items[i].excelsDir %>
             </div>
             <div style="border: 1px solid #999;padding: 4px;">
-                <%= items[i].jsonOutputConfig %>
+                <%= items[i].jsonOutputConfigFile %>
             </div>
             <div style="border: 1px solid #999;padding: 4px;">
                 <form action="/gm/info" method="post" enctype="application/x-www-form-urlencoded">

@@ -8,7 +8,7 @@ export namespace e2j {
 
     export function exportJson(config: any): string[] {
         outPutInfo = [];
-        setJsonDest(config.jsonOutputConfig);
+        setJsonDest(config.jsonOutputConfigFile);
         searchDir(config.excelsDir);
         return outPutInfo;
     }

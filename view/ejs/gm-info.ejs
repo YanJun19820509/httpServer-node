@@ -3,9 +3,9 @@
     <form action="/gm/update" method="post" enctype="application/x-www-form-urlencoded">
         <div
             style="display: grid;grid-template-columns: 200px auto;grid-template-rows: repeat(6,40px); text-align: left;">
-            <div>项目id：</div>
+            <div>项目代号：</div>
             <div>
-                <input type="text" name="id" value="<%= info.id %>" readonly />
+                <input type="text" name="code" value="<%= info.code %>" readonly/>
             </div>
             <div>项目名称：</div>
             <div><input type="text" name="name" value="<%= info.name %>" /></div>
@@ -14,18 +14,16 @@
                 <input type="text" id="root" name="root" style="width: 400px;" value="<%= info.root %>" />
                 <!-- <input type="button" value="选择" onclick="selDir('root');" /> -->
             </div>
-            <div>项目excel文件存放目录：</div>
+            <!-- <div>项目excel文件存放目录：</div>
             <div>
                 <input type="text" id="excelsDir" name="excelsDir" style="width: 400px;"
                     value="<%= info.excelsDir %>" />
-                <!-- <input type="button" value="选择" onclick="selDir('excelsDir');" /> -->
             </div>
             <div>json文件导出配置：</div>
             <div>
-                <input type="text" id="jsonOutputConfig" name="jsonOutputConfig" style="width: 400px;"
-                    value="<%= info.jsonOutputConfig %>" />
-                <!-- <input type="button" value="选择" onclick="selDir('jsonOutputConfig');" /> -->
-            </div>
+                <input type="text" id="jsonOutputConfigFile" name="jsonOutputConfigFile" style="width: 400px;"
+                    value="<%= info.jsonOutputConfigFile %>" />
+            </div> -->
             <div></div>
             <div>
                 <input type="submit" value="修改" />
