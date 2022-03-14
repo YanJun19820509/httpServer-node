@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'fs';
 import P from 'path'
 import xlsx from 'node-xlsx'
+import { parse } from 'jsonc-parser';
 
 export namespace e2j {
     let defaultDest: string[], fileDest: any;
@@ -15,7 +16,7 @@ export namespace e2j {
 
     function setJsonDest(configFile: string) {
         let destBuffer = readFileSync(configFile, 'utf8');
-        let destConfig = JSON.parse(destBuffer);
+        let destConfig = parse(destBuffer);
         destConfig.forEach((c: { dest: string[], files?: string[] }) => {
             if (!c.files) defaultDest = c.dest;
             else {
@@ -52,10 +53,13 @@ export namespace e2j {
     };
 
     function parseExcel(file: string, name: string) {
+        console.log('parseExcel', file);
         let buffer = readFileSync(file);
         var sheets = xlsx.parse(buffer);
         var json: any = new Object();
         sheets.forEach((sheet: any) => {
+            console.log('parseSheet', sheet.name);
+            if (sheet.name.indexOf('#') == 0) return;
             var o: any;
             var len = sheet.data.length;
             var names = [];
@@ -68,6 +72,7 @@ export namespace e2j {
                 for (var j = 0; j < l; j++) {
                     var cell = row[j];
                     if (i == 0) {//第一行是字段名
+                        if (cell == '' || cell == null) break;
                         names.push(cell);
                         if (cell == 'id') {
                             hasId = true;
