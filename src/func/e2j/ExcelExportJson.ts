@@ -59,28 +59,29 @@ export namespace e2j {
         var json: any = new Object();
         sheets.forEach((sheet: any) => {
             console.log('parseSheet', sheet.name);
-            if (sheet.name.indexOf('#') == 0) return;
+            if (sheet.name.indexOf('!') == 0) return;
             var o: any;
             var len = sheet.data.length;
             var names = [];
             var types = [];
             var hasId = false;
-            for (var i = 0; i < len; i++) {
+            for (var i = 1; i < len; i++) {
                 var row = sheet.data[i];
-                var l = i > 0 ? names.length : row.length;
+                var l = i > 1 ? names.length : row.length;
                 var data: any = {};
                 for (var j = 0; j < l; j++) {
-                    var cell = row[j];
-                    if (i == 0) {//第一行是字段名
+                    var cell = String(row[j]).trim();
+                    if (i == 1) {//第一行是字段名
                         if (cell == '' || cell == null) break;
                         names.push(cell);
                         if (cell == 'id') {
                             hasId = true;
                             o = new Object();
                         }
-                    } else if (i == 1) {//第二行是字段属性
+                    } else if (i == 2) {//第二行是字段属性
                         types.push(cell);
                     } else {
+                        if (cell == 'undefined') continue;
                         var name = names[j];
                         var type = types[j];
                         // console.log(name, type, cell);
