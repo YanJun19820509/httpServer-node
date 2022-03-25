@@ -34,8 +34,10 @@ export namespace e2j {
             let pa = P.join(dir, path);
             let s = statSync(pa);
             if (s.isDirectory()) searchDir(pa);
-            else if (P.extname(path) == '.xlsx' && path.indexOf('~$') == -1) {
-                parseExcel(pa, P.basename(path, '.xlsx'));
+            else if (path.indexOf('~$') == -1) {
+                let ex = P.extname(path);
+                if (ex == '.xlsx' || ex == '.xls')
+                    parseExcel(pa, P.basename(path, ex));
             }
         });
     }
