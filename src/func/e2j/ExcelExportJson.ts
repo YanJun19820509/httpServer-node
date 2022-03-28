@@ -98,7 +98,7 @@ export namespace e2j {
                     o.push(data);
                 }
             }
-            json[sheet.name.substr(0, sheet.name.indexOf('!'))] = o;
+            json[sheet.name.split('!')[0]] = o;
         });
 
         let dests: string[] = fileDest?.[name] || defaultDest;
