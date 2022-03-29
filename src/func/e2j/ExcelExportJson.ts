@@ -93,7 +93,7 @@ export namespace e2j {
                         }
                     }
                 }
-                if (!hasId && i > 0) {
+                if (!hasId && i > 3) {
                     o = o || new Array();
                     o.push(data);
                 }
