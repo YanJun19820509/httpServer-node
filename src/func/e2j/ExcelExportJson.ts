@@ -84,12 +84,12 @@ export namespace e2j {
                         types.push(cell);
                     } else {
                         if (cell == 'undefined') continue;
-                        var name = names[j];
+                        var nn = names[j];
                         var type = types[j];
                         // console.log(name, type, cell);
-                        data[name] = getVal(type, cell);
-                        if (name == 'id') {
-                            o[data[name]] = data;
+                        data[nn] = getVal(type, cell);
+                        if (nn == 'id') {
+                            o[data[nn]] = data;
                         }
                     }
                 }
@@ -100,7 +100,7 @@ export namespace e2j {
             }
             json[sheet.name.split('!')[0]] = o;
         });
-
+        name = name.split('!')[0];
         let dests: string[] = fileDest?.[name] || defaultDest;
         dests.forEach(dir => {
             var dest = dir + '/' + name + '.json';
