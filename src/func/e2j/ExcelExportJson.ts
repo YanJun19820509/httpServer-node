@@ -105,7 +105,7 @@ export namespace e2j {
         dests.forEach(dir => {
             var dest = dir + '/' + name + '.json';
             writeFileSync(dest, JSON.stringify(json), 'utf8');
-            outPutInfo.push(`导出json：${dest}`);
+            outPutInfo.push(dest);
         });
     }
 }
