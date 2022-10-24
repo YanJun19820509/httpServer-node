@@ -54,6 +54,11 @@ export namespace e2j {
         }
     };
 
+    function match(conten: string, regex: string): boolean {
+        let r = new RegExp(regex);
+        return r.test(conten);
+    }
+
     function parseExcel(file: string, name: string) {
         console.log('parseExcel', file);
         let buffer = readFileSync(file);
@@ -66,6 +71,7 @@ export namespace e2j {
             var len = sheet.data.length;
             var names = [];
             var types = [];
+            var regexs = [];
             var hasId = false;
             for (var i = 1; i < len; i++) {
                 var row = sheet.data[i];
@@ -82,14 +88,20 @@ export namespace e2j {
                         }
                     } else if (i == 2) {//第二行是字段属性
                         types.push(cell);
+                    } else if (i == 3) {//第三行是正则表达式
+                        regexs.push(cell);
                     } else {
                         if (cell == 'undefined') continue;
                         var nn = names[j];
                         var type = types[j];
+                        var regex = regexs[j];
                         // console.log(name, type, cell);
                         data[nn] = getVal(type, cell);
                         if (nn == 'id') {
                             o[data[nn]] = data;
+                        }
+                        if (regex != 'undefined' && !match(String(cell), regex)) {
+                            outPutInfo.push(`数据格式不匹配：文件${name} 表${sheet.name} 字段${nn} 第${i + 1}行`);
                         }
                     }
                 }
