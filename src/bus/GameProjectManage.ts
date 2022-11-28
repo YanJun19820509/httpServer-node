@@ -19,15 +19,15 @@ class GameProjectManage implements IBusiness {
             }
             case 'add': {
                 let t = GameTable.ins;
-                for (const key in InitProject.projectPathConfig) {
-                    param[key] = param.root + InitProject.projectPathConfig[key];
-                }
+                // for (const key in InitProject.projectPathConfig) {
+                //     param[key] = param.root + InitProject.projectPathConfig[key];
+                // }
                 param['id'] = await ProjectIDTable.ins.nextId();
                 let n = await t.insert(param);
                 t.close();
-                if (n > 0) {
-                    InitProject.init(param);
-                }
+                // if (n > 0) {
+                //     InitProject.init(param);
+                // }
                 return ctx.render('result', { result: `添加${n > 0 ? '成功' : '失败'}`, url: '/' });
             }
             case 'del': {
