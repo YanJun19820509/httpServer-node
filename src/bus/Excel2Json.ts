@@ -15,7 +15,7 @@ class Excel2Json implements IBusiness {
         utils.execFile(utils.resolvePath('svn.bat'), [c[0].excelsDir]);
         let message = e2j.exportJson(c[0]);
         for (let i = 0, n = message.length; i < n; i += 8) {
-            let a = [c[0].root + '/client/' + c[0].name.replace(/ /g, ''), message[i]];
+            let a = [c[0].root, message[i]];
             if (message[i + 1]) a[a.length] = message[i + 1];
             if (message[i + 2]) a[a.length] = message[i + 2];
             if (message[i + 3]) a[a.length] = message[i + 3];
