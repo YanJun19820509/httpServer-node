@@ -4,6 +4,7 @@ import bodyparser from 'koa-bodyparser'
 import BusinessLoader from './BusinessLoader';
 import { NotFound } from './NotFound';
 import views from 'koa-views';
+import serve from 'koa-static';
 import { utils } from './utils';
 
 /**
@@ -39,6 +40,8 @@ let start = function () {
         app.use(views(utils.resolvePath('view/ejs'), {
             extension: 'ejs'
         }));
+
+        app.use(serve('js'));
 
         app.use(router.routes());
         app.use(router.allowedMethods());
