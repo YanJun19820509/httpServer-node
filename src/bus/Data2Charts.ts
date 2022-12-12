@@ -30,7 +30,7 @@ class Data2Charts implements IBusiness {
             keys[keys.length] = key;
             const a: any[] = this.datas[key];
             a.forEach(aa => {
-                let b = series[aa.name] || { name: `${aa.name}并发`, type: 'bar', data: [], stack: 'x' };
+                let b = series[aa.name] || { name: `${aa.name}并发`, type: 'bar', data: [] };
                 b.data[b.data.length] = aa.totalReqSize / aa.totalReqNum;
                 series[aa.name] = b;
             });
@@ -48,7 +48,7 @@ class Data2Charts implements IBusiness {
             series2: { [k: string]: { name: string, type: 'bar' | 'line', data: number[], stack?: string } } = {};
         a.forEach(aa => {
             series1[aa.name] = { name: `${aa.name}并发,${aa.totalReqNum}请求`, type: 'bar', data: [aa.totalReqSize, aa.totalRespSize] };
-            series2[aa.name] = { name: `${aa.name}并发`, type: 'bar', data: [aa.p50, aa.p60, aa.p70, aa.p80, aa.p90, aa.p95, aa.p99, aa.p999, aa.p9999], stack: 'x' };
+            series2[aa.name] = { name: `${aa.name}并发`, type: 'bar', data: [aa.p50, aa.p60, aa.p70, aa.p80, aa.p90, aa.p95, aa.p99, aa.p999, aa.p9999] };
         });
 
         return JSON.stringify({
