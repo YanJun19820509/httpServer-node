@@ -25,39 +25,51 @@ class Data2Charts implements IBusiness {
 
     private getAll() {
         if (!this.datas) this.initData();
-        let keys: string[] = [], series: { [k: string]: { name: string, type: 'bar' | 'line', data: number[], stack?: string } } = {};
+        let keys: string[] = [], series: { [k: string]: { name: string, type: 'bar' | 'line', data: number[], stack?: string, yAxisIndex?: number } } = {};
         for (const key in this.datas) {
             keys[keys.length] = key;
             const a: any[] = this.datas[key];
+            let to: number = 0;
             a.forEach(aa => {
                 let b = series[aa.name] || { name: `${aa.name}并发`, type: 'bar', data: [] };
                 b.data[b.data.length] = aa.totalReqSize / aa.totalReqNum;
                 series[aa.name] = b;
+                to += aa.avg;
             });
+            let c = series['_avg_'] || { name: `平均延时数`, type: 'bar', data: [], yAxisIndex: 1 };
+            c.data[c.data.length] = to / a.length;
+            series['_avg_'] = c;
         }
         this._keys = keys;
-        return JSON.stringify(this.createChartsData('综合数据', Object.values(series), { data: keys, name: '接口类型' }, { name: '平均带宽（bytes）' }));
+        return JSON.stringify(this.createChartsData('综合数据', Object.values(series), { data: keys, name: '接口类型' }, [{ name: '平均带宽（bytes）' }, { name: '平均延时数' }]));
     }
 
     private getSub(idx: number) {
         const key = this._keys[idx];
         const a: any[] = this.datas[key];
-        let keys1: string[] = ['总请求带宽', '总返回带宽'],
+        let keys1: string[] = [],
             keys2: string[] = ['50%', '60%', '70%', '80%', '90%', '95%', '99%', '99.9%', '99.99%'],
             series1: { [k: string]: { name: string, type: 'bar' | 'line', data: number[], stack?: string } } = {},
             series2: { [k: string]: { name: string, type: 'bar' | 'line', data: number[], stack?: string } } = {};
         a.forEach(aa => {
-            series1[aa.name] = { name: `${aa.name}并发,${aa.totalReqNum}请求`, type: 'bar', data: [aa.totalReqSize, aa.totalRespSize] };
+            keys1[keys1.length] = `${aa.name}并发`;
+            // series1[aa.name] = { name: `${aa.name}并发`, type: 'bar', data: [aa.totalReqSize, aa.totalRespSize] };
+            series1['totalReqSize'] = series1['totalReqSize'] || { name: `总请求带宽`, type: 'bar', data: [] };
+            series1['totalReqSize'].data[series1['totalReqSize'].data.length] = aa.totalReqSize;
+            series1['totalRespSize'] = series1['totalRespSize'] || { name: `总返回带宽`, type: 'bar', data: [] };
+            series1['totalRespSize'].data[series1['totalRespSize'].data.length] = aa.totalRespSize;
+            series1['totalReqNum'] = series1['totalReqNum'] || { name: `总请求数`, type: 'bar', data: [], yAxisIndex: 1 };
+            series1['totalReqNum'].data[series1['totalReqNum'].data.length] = aa.totalReqNum;
             series2[aa.name] = { name: `${aa.name}并发`, type: 'bar', data: [aa.p50, aa.p60, aa.p70, aa.p80, aa.p90, aa.p95, aa.p99, aa.p999, aa.p9999] };
         });
 
         return JSON.stringify({
-            charts1: this.createChartsData(`接口${key}`, Object.values(series1), { data: keys1 }, {name: 'bytes'}),
+            charts1: this.createChartsData(`接口${key}`, Object.values(series1), { data: keys1 }, [{ name: '带宽（bytes）' }, { name: '请求次数' }]),
             charts2: this.createChartsData(`接口${key}`, Object.values(series2), { data: keys2, name: '延迟分位数' }, { name: '延迟个数' })
         });
     }
 
-    private createChartsData(title: string, series: { name: string, type: 'bar' | 'line', data: number[], itemStyle?: { color: string } }[], xAxis: { data: string[], name?: string, type?: string }, yAxis?: { data?: string[], name?: string, type?: string }): any {
+    private createChartsData(title: string, series: { name: string, type: 'bar' | 'line', data: number[], itemStyle?: { color: string } }[], xAxis: { data: string[], name?: string, type?: string }, yAxis?: { data?: string[], name?: string, type?: string } | { data?: string[], name?: string, type?: string, min?: number, max?: number }[]): any {
         let legendTitles: string[] = [];
         series.forEach(s => {
             legendTitles[legendTitles.length] = s.name;
@@ -94,6 +106,7 @@ class Data2Charts implements IBusiness {
         let a = this.datas[json.apiRoute] || [];
         a[a.length] = {
             "name": json.connectionCnt,
+            "avg": json.avg,
             "max": json.max,
             "min": json.min,
             "p50": json.p50,
