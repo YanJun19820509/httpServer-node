@@ -28,19 +28,19 @@ class GameProjectManage implements IBusiness {
                 // if (n > 0) {
                 //     InitProject.init(param);
                 // }
-                return ctx.render('result', { result: `添加${n > 0 ? '成功' : '失败'}`, url: '/' });
+                return ctx.render('result', { result: `添加${n > 0 ? '成功' : '失败'}`, url: '/', id: '' });
             }
             case 'del': {
                 let t = GameTable.ins;
                 let n = await t.delete({ id: param.id });
                 t.close();
-                return ctx.render('result', { result: `删除${n > 0 ? '成功' : '失败'}`, url: '/' });
+                return ctx.render('result', { result: `删除${n > 0 ? '成功' : '失败'}`, url: '/', id: '' });
             }
             case 'update': {
                 let t = GameTable.ins;
                 let n = await t.update(param, { id: param.id });
                 t.close();
-                return ctx.render('result', { result: `修改${n > 0 ? '成功' : '失败'}`, url: '/' });
+                return ctx.render('result', { result: `修改${n > 0 ? '成功' : '失败'}`, url: '/gm/info', id: param.id });
             }
             default:
                 return Promise.resolve();

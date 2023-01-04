@@ -10,15 +10,16 @@
         <h2>
             导出结果
         </h2>
+
+        <form action="/gm/info" method="post" enctype="application/x-www-form-urlencoded">
+            <input type="text" name="id" value="<%= id %>" style="display: none;" />
+            <input type="submit" value="返回">
+        </form>
         <% result.forEach(item=> { %>
             <h3>
                 <%= item %>
             </h3>
             <% }); %>
-                <form action="/gm/info" method="post" enctype="application/x-www-form-urlencoded">
-                    <input type="text" name="id" value="<%= id %>" style="display: none;" />
-                    <input type="submit" value="返回">
-                </form>
     </div>
 </body>
 

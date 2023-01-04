@@ -1,3 +1,6 @@
+<div style="text-align: center;width: fit-content;margin: auto;">
+    <a href="/">返回</a>
+</div>
 <div style="width: fit-content;margin: auto;">
     <h4>项目管理</h4>
     <form action="/gm/update" method="post" enctype="application/x-www-form-urlencoded">
@@ -44,8 +47,11 @@
                 <input type="submit" value="压测数据" style="width: 100px;height: 100px;" />
             </form>
         </div>
+        <div style="width: fit-content;height: fit-content;">
+            <form action="/cdn/info" method="post" enctype="application/x-www-form-urlencoded">
+                <input type="text" name="id" value="<%= info.id %>" style="display: none;" />
+                <input type="submit" value="CDN" style="width: 100px;height: 100px;" />
+            </form>
+        </div>
     </div>
-</div>
-<div style="text-align: center;width: fit-content;margin: auto;">
-    <a href="/">返回</a>
 </div>
