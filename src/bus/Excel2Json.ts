@@ -28,9 +28,8 @@ class Excel2Json implements IBusiness {
                 let root = param.copyTo == '0' ? c.root : c.rootDev;
                 let names: string[] = param.selectedName,
                     files: string[] = param.selectedFile;
-                console.log(files, names, param.copyTo);
 
-                let destBuffer = readFileSync(c.configFile, 'utf8');
+                let destBuffer = readFileSync(c.jsonOutputConfigFile, 'utf8');
                 let destConfig = parse(destBuffer);
 
                 let defaultDest: string[], fileDest: any;
@@ -45,9 +44,9 @@ class Excel2Json implements IBusiness {
                 });
 
                 let message: string[] = [];
-                names.forEach(name => {
+                names.forEach((name,i) => {
                     let dests: string[] = fileDest?.[name] || defaultDest;
-                    dests.forEach((dir, i) => {
+                    dests.forEach(dir => {
                         var dest = join(root, dir, name + '.json');
                         message[message.length] = dest;
                         copyFileSync(files[i], dest);
