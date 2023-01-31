@@ -1,36 +1,23 @@
-import { readdirSync, readFileSync, statSync, writeFileSync } from 'fs';
-import P from 'path'
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'fs';
+import P, { join } from 'path'
 import xlsx from 'node-xlsx'
-import { parse } from 'jsonc-parser';
 
 export namespace e2j {
-    let defaultDest: string[], fileDest: any;
-    let outPutInfo: string[];
+    let outputDir: string;
+    let outPutInfo: any[];
 
-    export function exportJson(config: any): string[] {
+    export function exportJson(config: any): any[] {
         outPutInfo = [];
-        setJsonDest(config.jsonOutputConfigFile);
+        outputDir = join(config.excelsDir, '.output');
+        if (!existsSync(outputDir)) mkdirSync(outputDir);
         searchDir(config.excelsDir);
         return outPutInfo;
-    }
-
-    function setJsonDest(configFile: string) {
-        let destBuffer = readFileSync(configFile, 'utf8');
-        let destConfig = parse(destBuffer);
-        destConfig.forEach((c: { dest: string[], files?: string[] }) => {
-            if (!c.files) defaultDest = c.dest;
-            else {
-                fileDest = fileDest || {};
-                c.files.forEach((file: string) => {
-                    fileDest[file] = c.dest;
-                });
-            }
-        });
     }
 
     function searchDir(dir: string) {
         let paths = readdirSync(dir);
         paths.forEach((path: string) => {
+            if (path == '.output') return;
             let pa = P.join(dir, path);
             let s = statSync(pa);
             if (s.isDirectory()) searchDir(pa);
@@ -60,6 +47,7 @@ export namespace e2j {
     }
 
     function parseExcel(file: string, name: string) {
+        if (name.indexOf('!') == 0) return;
         console.log('parseExcel', file);
         let buffer = readFileSync(file);
         var sheets = xlsx.parse(buffer);
@@ -113,11 +101,8 @@ export namespace e2j {
             json[sheet.name.split('!')[0]] = o;
         });
         name = name.split('!')[0];
-        let dests: string[] = fileDest?.[name] || defaultDest;
-        dests.forEach(dir => {
-            var dest = dir + '/' + name + '.json';
-            writeFileSync(dest, JSON.stringify(json), 'utf8');
-            outPutInfo.push(dest);
-        });
+        var dest = outputDir + '/' + name + '.json';
+        writeFileSync(dest, JSON.stringify(json), 'utf8');
+        outPutInfo.push({ dir: dest, name: name });
     }
 }

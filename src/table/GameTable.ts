@@ -7,6 +7,7 @@ let _tableName = 'games';
     'code TEXT NOT NULL',
     'name TEXT NOT NULL',
     'root TEXT NOT NULL',
+    'rootDev TEXT NOT NULL',
     'excelsDir TEXT',
     'jsonOutputConfigFile TEXT'
 ])

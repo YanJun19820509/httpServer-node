@@ -2,7 +2,6 @@ import { ParameterizedContext } from "koa";
 import { IRouterParamContext } from "koa-router";
 import GameTable from "../../src/table/GameTable";
 import { IBusiness, register } from "../../src/BusinessInterface";
-import { InitProject } from "../../src/func/InitProject";
 import ProjectIDTable from "../../src/table/ProjectIDTable";
 
 @register('/gm/:type')
@@ -19,15 +18,9 @@ class GameProjectManage implements IBusiness {
             }
             case 'add': {
                 let t = GameTable.ins;
-                // for (const key in InitProject.projectPathConfig) {
-                //     param[key] = param.root + InitProject.projectPathConfig[key];
-                // }
                 param['id'] = await ProjectIDTable.ins.nextId();
                 let n = await t.insert(param);
                 t.close();
-                // if (n > 0) {
-                //     InitProject.init(param);
-                // }
                 return ctx.render('result', { result: `添加${n > 0 ? '成功' : '失败'}`, url: '/', id: '' });
             }
             case 'del': {
