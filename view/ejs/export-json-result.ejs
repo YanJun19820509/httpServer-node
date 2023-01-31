@@ -11,16 +11,37 @@
             all.forEach(a => {
                 a.checked = checked;
             });
-            all = document.getElementsByName('selectedFile');
+            var all = document.getElementsByName('selectedFile');
             all.forEach(a => {
                 a.checked = checked;
             });
         }
 
-        function submit(type) {
+        function onNameClick() {
+            var all = document.getElementsByName('selectedName');
+            var all1 = document.getElementsByName('selectedFile');
+            var checked = true;
+            all.forEach((a, i) => {
+                all1[i].checked = a.checked;
+                if (!a.checked) checked = false;
+            });
+            if (!checked) {
+                document.getElementById('checkAll').checked = false;
+            }
+        }
+
+        function submit0() {
+            submit('0');
+        }
+
+        function submit1() {
+            submit('1');
+        }
+
+        function submit(v) {
             var form = document.getElementById('submitForm');
             var type = document.getElementById('copyTo');
-            type.value = type;
+            type.value = v;
             form.submit();
         }
     </script>
@@ -37,7 +58,7 @@
             <input type="submit" value="返回">
         </form>
         <div></div>
-        <form action="/gm/copy_json" id="submitForm" method="post" enctype="application/x-www-form-urlencoded">
+        <form action="/json/copy_json" id="submitForm" method="post" enctype="application/x-www-form-urlencoded">
             <div style="display: grid;grid-template-columns: repeat(3,max-content); text-align: left;">
                 <div style="border: 1px solid #999;padding: 4px;">
                     <input type="checkbox" id="checkAll" onchange="onCheckAll()" />全部
@@ -51,9 +72,10 @@
 
                 <% for(var i=0,n=result.length; i < n; i++) { %>
                     <div style="border: 1px solid #999;padding: 4px;">
-                        <input type="checkbox" name="selectedName" value="<%= result[i].name %>" />
-                        <input type="checkbox" name="selectedFile" value="<%= result[i].dir %>"
-                            style="display: none;" />
+                        <input type="checkbox" name="selectedName" onclick="onNameClick()"
+                            value="<%= result[i].name %>" />
+                        <input type="checkbox" id="selectedFile<%= i %>" name="selectedFile"
+                            value="<%= result[i].dir %>" style="display: none;" />
                     </div>
                     <div style="border: 1px solid #999;padding: 4px;">
                         <%= result[i].name %>
@@ -67,8 +89,8 @@
             <input type="text" id="copyTo" name="copyTo" value="" style="display: none;" />
         </form>
         <div></div>
-        <button onclick="submit(0)">提交上线版</button>
-        <button onclick="submit(1)">提交开发版</button>
+        <button onclick="submit0()">提交上线版</button>
+        <button onclick="submit1()">提交开发版</button>
     </div>
 </body>
 

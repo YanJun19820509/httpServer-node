@@ -25,10 +25,10 @@ class Excel2Json implements IBusiness {
                 let t = GameTable.ins;
                 let c = (await t.select(`id = ${param.id}`))[0];
                 t.close();
-                let root = param.type == '0' ? c.root : c.rootDev;
+                let root = param.copyTo == '0' ? c.root : c.rootDev;
                 let names: string[] = param.selectedName,
                     files: string[] = param.selectedFile;
-                console.log(files, names);
+                console.log(files, names, param.copyTo);
 
                 let destBuffer = readFileSync(c.configFile, 'utf8');
                 let destConfig = parse(destBuffer);
