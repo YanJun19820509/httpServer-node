@@ -5,7 +5,7 @@
     <h4>项目管理</h4>
     <form action="/gm/update" method="post" enctype="application/x-www-form-urlencoded">
         <div
-            style="display: grid;grid-template-columns: 200px auto;grid-template-rows: repeat(6,40px); text-align: left;">
+            style="display: grid;grid-template-columns: 200px auto;grid-template-rows: repeat(8,40px); text-align: left;">
             <div>项目代号：</div>
             <div>
                 <input type="text" name="code" value="<%= info.code %>" readonly/>
@@ -16,9 +16,17 @@
             <div>
                 <input type="text" id="root" name="root" style="width: 400px;" value="<%= info.root %>" />
             </div>
+            <div>分支名：</div>
+            <div>
+                <input type="text" id="branch" name="branch" style="width: 400px;" value="<%= info.branch %>" />
+            </div>
             <!-- <div>开发版项目根目录：</div>
             <div>
                 <input type="text" id="rootDev" name="rootDev" style="width: 400px;" value="<%= info.rootDev %>" />
+            </div>
+            <div>开发版分支名：</div>
+            <div>
+                <input type="text" id="branchDev" name="branchDev" style="width: 400px;" value="<%= info.branchDev %>" />
             </div> -->
             <div>项目excel文件存放目录：</div>
             <div>
@@ -38,6 +46,12 @@
         </div>
     </form>
     <div style="display: grid;grid-template-columns: auto repeat(6,auto); text-align: center;">
+        <div style="width: fit-content;height: fit-content;">
+            <form action="/svn/update" method="post" enctype="application/x-www-form-urlencoded">
+                <input type="text" name="id" value="<%= info.id %>" style="display: none;" />
+                <input type="submit" value="一键更新" style="width: 100px;height: 100px;" />
+            </form>
+        </div>
         <div style="width: fit-content;height: fit-content;">
             <form action="/json/export_json" method="post" enctype="application/x-www-form-urlencoded">
                 <input type="text" name="id" value="<%= info.id %>" style="display: none;" />

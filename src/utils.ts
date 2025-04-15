@@ -1,4 +1,4 @@
-import { execFileSync } from "child_process";
+import { execFileSync, execSync } from "child_process";
 import { copyFileSync, mkdirSync, readFileSync } from "fs";
 import { parse } from "jsonc-parser";
 import P from 'path';
@@ -23,6 +23,15 @@ export namespace utils {
      */
     export function execFile(file: string, args: string[]): string {
         return execFileSync(file, args, { encoding: 'utf8' });
+    }
+
+    /**
+     * 执行命令行
+     * @param cmd 
+     * @returns 
+     */
+    export function execCommand(cmd: string): string {
+        return execSync(cmd, { encoding: 'utf-8' });
     }
 
     /**

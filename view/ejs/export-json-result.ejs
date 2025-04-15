@@ -72,10 +72,12 @@
 
                 <% for(var i=0,n=result.length; i < n; i++) { %>
                     <div style="border: 1px solid #999;padding: 4px;">
+                        <% if(result[i].state == 1){ %>
                         <input type="checkbox" name="selectedName" onclick="onNameClick()"
                             value="<%= result[i].name %>" />
                         <input type="checkbox" id="selectedFile<%= i %>" name="selectedFile"
                             value="<%= result[i].dir %>" style="display: none;" />
+                        <% } %>
                     </div>
                     <div style="border: 1px solid #999;padding: 4px;">
                         <%= result[i].name %>

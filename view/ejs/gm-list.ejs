@@ -1,6 +1,6 @@
 <div style="width: fit-content;margin: auto;">
     <h3>项目列表</h3>
-    <div style="display: grid;grid-template-columns: auto repeat(6,auto); text-align: left;">
+    <div style="display: grid;grid-template-columns: auto repeat(3,auto); text-align: left;">
         <div style="border: 1px solid #999;padding: 4px;"></div>
         <div style="border: 1px solid #999;padding: 4px;">
             <h4>项目名称</h4>
@@ -8,7 +8,7 @@
         <div style="border: 1px solid #999;padding: 4px;">
             <h4>项目代号</h4>
         </div>
-        <div style="border: 1px solid #999;padding: 4px;">
+        <!-- <div style="border: 1px solid #999;padding: 4px;">
             <h4>项目根目录</h4>
         </div>
         <div style="border: 1px solid #999;padding: 4px;">
@@ -16,7 +16,7 @@
         </div>
         <div style="border: 1px solid #999;padding: 4px;">
             <h4>json文件导出配置</h4>
-        </div>
+        </div> -->
         <div style="border: 1px solid #999;padding: 4px;"></div>
         <% for(var i=0,n=items.length; i < n; i++){ %>
             <div style="border: 1px solid #999;padding: 4px;">
@@ -31,7 +31,7 @@
             <div style="border: 1px solid #999;padding: 4px;">
                 <%= items[i].code %>
             </div>
-            <div style="border: 1px solid #999;padding: 4px;">
+            <!-- <div style="border: 1px solid #999;padding: 4px;">
                 <%= items[i].root %>
             </div>
             <div style="border: 1px solid #999;padding: 4px;">
@@ -39,7 +39,7 @@
             </div>
             <div style="border: 1px solid #999;padding: 4px;">
                 <%= items[i].jsonOutputConfigFile %>
-            </div>
+            </div> -->
             <div style="border: 1px solid #999;padding: 4px;">
                 <form action="/gm/del" method="post" enctype="application/x-www-form-urlencoded">
                     <input type="text" name="id" value="<%= items[i].id %>" style="display: none;" />
