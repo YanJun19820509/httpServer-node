@@ -140,24 +140,25 @@ export namespace e2j {
         writeFileSync(dest, JSON.stringify(json), 'utf8');
         outPutInfo.push({ dir: dest, name: name, state: 1 });
 
-        tsContent.unshift(`export namespace ${name} {`);
-        tsContent.push(`}`);
+        tsContent.unshift(`\tnamespace config_${name} {`);
+        tsContent.unshift(`declare global {`);
+        tsContent.push(`\t}\n}\nexport { };`);
         writeFileSync(outputDir + '/' + name + '.d.ts', tsContent.join('\n'), 'utf8');
     }
 
     // 生成TypeScript接口文件
     function createDataInterface(names: string[], types: string[], descs: string[], name: string) {
         const n = name.split('!');
-        var content = `\t/**${n[1]}*/\n`;
-        content += `\texport type ${n[0]} = {
-        [key: number]: ${n[0]}Data
-    };\n`;
-        content += `\texport type ${n[0]}Data = {\n`;
+        var content = `\t\t/**${n[1]}*/\n`;
+        content += `\t\ttype ${n[0]} = {
+            [key: number]: ${n[0]}Data
+        };\n`;
+        content += `\t\ttype ${n[0]}Data = {\n`;
         for (var i = 0; i < names.length; i++) {
-            content += `\t\t/** ${descs[i]} */\n`;
-            content += `\t\t${names[i]}: ${getType(types[i])};\n`;
+            content += `\t\t\t/** ${descs[i]} */\n`;
+            content += `\t\t\t${names[i]}: ${getType(types[i])};\n`;
         }
-        content += `\t};`;
+        content += `\t\t};`;
         return content;
     }
 
